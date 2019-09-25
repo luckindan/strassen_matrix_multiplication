@@ -13,6 +13,7 @@ class data_generator{
 
     }
 
+
     //m : amount of data you want to generate
     data_generator(int num){
         m_num = num;
