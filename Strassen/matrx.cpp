@@ -1,8 +1,7 @@
-#include 'matrx.h'
-using namespace matrx;
+#include "matrx.h"
 
-bool run(){
-	if(!m_data)
+bool matrx::run(){
+	if(!matrx::m_data)
 		throw "No data loaded, please load the data first";
 
 	//use the function pointer to run the and get the result
@@ -18,5 +17,10 @@ bool run(){
 		return false;
 	}
 	*/
-	return true
+	return true;
+}
+
+void matrx::retrieve_data(std::string filename){
+
+	std::cout<< "retrieve_data" << std::endl;
 }
