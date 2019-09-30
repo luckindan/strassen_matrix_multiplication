@@ -1,15 +1,22 @@
-class matrx{
-    public:
+#include 'matrx.h'
+using namespace matrx;
 
-    matrx(){};
-    void retrieve_info(string filename){};
-    bool reg_mul(){};
-    bool stras_mul(){};
-    int get_stras_space(){}; 
-    int get_stras_time(){}; 
-    int get_reg_space(){}; 
-    int get_reg_time(){}; 
-    
-    private:
+bool run(){
+	if(!m_data)
+		throw "No data loaded, please load the data first";
 
-};
+	//use the function pointer to run the and get the result
+	/*	
+	try:{
+		init_time = now()
+		m_ans = function(m_data)
+		m_space = sizeof(m_ans)
+		m_time = now() - init_time
+	}
+	catch(Exception E){
+		std::cout << E << std::endl;	
+		return false;
+	}
+	*/
+	return true
+}
