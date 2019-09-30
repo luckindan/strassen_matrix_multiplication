@@ -34,6 +34,7 @@ class matrx{
         bool set_function(int* (*compute)(int *data)); //sets the computing methods 
         int get_space(){return space_use;}  //return the space use
         int get_time(){return run_time;}  //returns the run time use
+        void dump();
         
     private:
         int space_use;
