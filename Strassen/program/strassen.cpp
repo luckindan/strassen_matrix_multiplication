@@ -1,7 +1,7 @@
-#include <cmath>
+#include "matrx.h"
 
-int * strassen(int *m_data){
-	int *ans = new int();
+vec  strassen(vec m_data){
+	vec ans;
 
 	std::cout << "strassen" << std::endl;
 

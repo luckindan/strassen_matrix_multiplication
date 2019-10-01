@@ -8,33 +8,38 @@ matrx
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <cmath>
 #include "log.cpp"
 
 using namespace std;
+
+typedef vector<vector<int>> vec;
 
 class matrx{
     public:
         matrx(){
             space_use = 0;
             run_time = 0;
-            m_data = NULL;
-            m_ans = NULL;
+            m_name = "matrix";
         }
 
-        matrx(int* (*compute)(int *data)){
+        matrx(vec (*compute)(vec data)){
         	space_use = 0;
             run_time = 0;
-            m_data = NULL;
-            m_ans = NULL;
+            m_name = "matrix";       
+            m_compute = compute;
+        }
+        matrx(vec (*compute)(vec data), string name){
+            space_use = 0;
+            run_time = 0;
+            m_name = name;
             m_compute = compute;
         }
 
         ~matrx(){
             space_use = 0;
             run_time = 0;
-            m_data = nullptr;
-            m_ans = nullptr;
-            m_compute = nullptr;
         }
         //matrx(function_pointer);
         void retrieve_data(string filename); //reads the data into *m_data which is a 2D array 
@@ -48,10 +53,10 @@ class matrx{
     private:
         int space_use;
         int run_time;
-        int *m_data;
-        int *m_ans;
-        int* (*m_compute)(int *data);
-        log m_log;
+        vec m_data;
+        vec m_ans;
+        vec (*m_compute)(vec data);
+        string m_name;
         // we will implment each function in a separate file
  };
 

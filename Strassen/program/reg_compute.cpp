@@ -1,8 +1,9 @@
-#include <cmath>
 
-int * reg_compute(int *m_data){
+#include "matrx.h"
 
-	int *ans = new int();
+vec reg_compute(vec m_data){
+
+	vec ans;
 
 	std::cout << "reg_compute" << std::endl;
 

@@ -27,4 +27,5 @@ void matrx::retrieve_data(std::string filename){
 
 void matrx::dump(){
 	std::cout << "Run" << std::endl;
+
 }
