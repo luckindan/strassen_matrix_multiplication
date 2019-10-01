@@ -51,7 +51,8 @@ class matrx{
         int *m_data;
         int *m_ans;
         int* (*m_compute)(int *data);
-            // we will implment each function in a separate file
+        log m_log;
+        // we will implment each function in a separate file
  };
 
 

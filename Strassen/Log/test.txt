@@ -1,4 +1,0 @@
-Tue Oct  1 15:13:16 2019
-: Hello world
-Tue Oct  1 15:13:16 2019
-: Bye world
