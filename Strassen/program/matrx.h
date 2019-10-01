@@ -8,6 +8,7 @@ matrx
 
 #include <iostream>
 #include <string>
+#include "log.cpp"
 
 using namespace std;
 
@@ -26,6 +27,14 @@ class matrx{
             m_data = NULL;
             m_ans = NULL;
             m_compute = compute;
+        }
+
+        ~matrx(){
+            space_use = 0;
+            run_time = 0;
+            m_data = nullptr;
+            m_ans = nullptr;
+            m_compute = nullptr;
         }
         //matrx(function_pointer);
         void retrieve_data(string filename); //reads the data into *m_data which is a 2D array 
