@@ -1,6 +1,6 @@
 #include "matrx.h"
 
-vec  strassen(vec m_data){
+vec  strassen(vec &data1, vec &data2){
 	vec ans;
 
 	std::cout << "strassen" << std::endl;

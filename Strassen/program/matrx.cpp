@@ -1,31 +1,62 @@
 #include "matrx.h"
 
 bool matrx::run(){
-	//if(!matrx::m_data)
-	//	throw "No data loaded, please load the data first";
-	m_ans = m_compute(m_data);
-	//use the function pointer to run the and get the result
-	/*	
-	try:{
-		init_time = now()
-		m_ans = function(m_data)
-		m_space = sizeof(m_ans)
-		m_time = now() - init_time
+	using namespace std::chrono;
+	try
+	{
+		if(m_data_1.empty() || m_data_2.empty())
+			throw "No data loaded, please load the data first";
+
+		m_ans = m_compute(m_data_1, m_data_2);
+
+		return true;
 	}
-	catch(Exception E){
-		std::cout << E << std::endl;	
+	catch(char *e){
 		return false;
 	}
-	*/
-	return true;
+
 }
 
-void matrx::retrieve_data(std::string filename){
+void matrx::retrieve_data(std::string filename, vec& myvec){
 
-	std::cout<< "retrieve_data" << std::endl;
+	ifstream myfile(filename);
+	string line;
+	while(getline(myfile,line)){
+		std::vector<int> v;
+		string s;
+		stringstream ss(line);
+		while(ss >> s){
+			v.push_back(stoi(s));
+		}
+		myvec.push_back(v);
+	}
+
+
 }
 
 void matrx::dump(){
-	std::cout << "Run" << std::endl;
+	cout << "Data 1:\n";
+	for (auto i : m_data_1){
+		for(auto j: i){
+			std::cout << j << " ";
+		}
+		std::cout << std::endl;
+	}
+	cout << "Data 2:\n";
+	for (auto i : m_data_2){
+		for(auto j: i){
+			std::cout << j << " ";
+		}
+		std::cout << std::endl;
+	}
+	cout << "Answer :\n";
+	for (auto i : m_ans){
+		for(auto j: i){
+			std::cout << j << " ";
+		}
+		std::cout << std::endl;
+	}
 
+	cout << "Time used " << run_time << endl;
+	cout << "Space used " << space_use << endl;
 }
