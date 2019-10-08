@@ -23,7 +23,7 @@ vec matrix2x2(vec &data1, vec &data2) {
 	tempA.push_back(p1 + p2);
 	ans.push_back(tempA);
 	tempB.push_back(p3 + p4);
-	tempB.push_back(p1 + p5 + p7 - p3);
+	tempB.push_back(p1 + p5 - p7 - p3);
 	ans.push_back(tempB);
 
 	return ans;
