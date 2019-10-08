@@ -56,8 +56,8 @@ vec strassen(vec &data1, vec &data2){
 }
 
 /*int recursive(vec &data1, vec &data2, vec &letter) {
-	if (letter.size == 1) {
-		letter[0];
+	if (letter.size == 2) {
+		return matrix2x2(data1, data2);
 	}
 	vec a;
 	vec b;
