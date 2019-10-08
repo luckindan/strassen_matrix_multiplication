@@ -19,7 +19,7 @@ vec matrix2x2(vec &data1, vec &data2) {
 	int p7 = (a - c) * (e + f);
 	vector<int> tempA;
 	vector<int> tempB;
-	tempA.push_back(p5 + p4 - p3 + p6);
+	tempA.push_back(p5 + p4 - p2 + p6);
 	tempA.push_back(p1 + p2);
 	ans.push_back(tempA);
 	tempB.push_back(p3 + p4);
