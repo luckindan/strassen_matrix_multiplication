@@ -15,8 +15,8 @@ vec matrix2x2(vec &data1, vec &data2) {
 	int p3 = (c + d) * e;
 	int p4 = d * (g - e);
 	int p5 = (a + d) * (e + h);
-	int p6 = (b - d) * (g + h);
-	int p7 = (a - c) * (e - f);
+	int p6 = (b - d) * (f - h);
+	int p7 = (a - c) * (e + f);
 	vector<int> tempA;
 	vector<int> tempB;
 	tempA.push_back(p5 + p4 - p3 + p6);
@@ -84,7 +84,7 @@ vec strassen(vec &data1, vec &data2){
 	int p3 = (c + d) * e;
 	int p4 = d * (g - e);
 	int p5 = (a + d) * (e + h);
-	int p6 = (b - d) * (g + h);
-	int p7 = (a - c) * (e - f);
+	int p6 = (b - d) * (f - h);
+	int p7 = (a - c) * (e + f);
 }*/
 
