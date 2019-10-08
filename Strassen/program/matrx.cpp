@@ -1,5 +1,8 @@
 #include "matrx.h"
 
+
+
+
 bool matrx::run(){
 	using namespace std::chrono;
 	try
