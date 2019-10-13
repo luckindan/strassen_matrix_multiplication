@@ -60,12 +60,12 @@ vec submatrix(vec &data1, int index) {
 	int i = 0; //default if index = 1
 	int j = 0;
 	if (index == 2) {
-		i = size;
-		j = 0;
-	}
-	else if (index == 3) {
 		i = 0;
 		j = size;
+	}
+	else if (index == 3) {
+		i = size;
+		j = 0;
 	}
 	else if (index == 4) {
 		i = size;
