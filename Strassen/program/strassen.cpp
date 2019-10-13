@@ -37,6 +37,7 @@ vec add(vec &data1, vec &data2) {
 			tempA.push_back(data1[i][j] + data2[i][j]);
 		}
 		ans.push_back(tempA);
+		tempA.clear();
 	}
 	return ans;
 }
@@ -49,6 +50,7 @@ vec subtract(vec &data1, vec &data2) {
 			tempA.push_back(data1[i][j] - data2[i][j]);
 		}
 		ans.push_back(tempA);
+		tempA.clear();
 	}
 	return ans;
 }
