@@ -77,6 +77,7 @@ vec submatrix(vec &data1, int index) {
 			tempA.push_back(data1[k][l]);
 		}
 		ans.push_back(tempA);
+		tempA.clear();
 	}
 	return ans;
 }
