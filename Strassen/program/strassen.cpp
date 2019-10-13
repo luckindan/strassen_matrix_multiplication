@@ -48,6 +48,7 @@ vec subtract(vec &data1, vec &data2) {
 	for (int i = 0; i < data1.size(); i++) {
 		for (int j = 0; j < data1.size(); j++) {
 			tempA.push_back(data1[i][j] - data2[i][j]);
+			std::cout << tempA[0] << std::endl;
 		}
 		ans.push_back(tempA);
 		tempA.clear();
