@@ -78,6 +78,7 @@ vec submatrix(vec &data1, int index) {
 			t = data1[k][l];
 			std::cout << "l: " << l << std::endl;
 			tempA.push_back(t);
+			std:: cout << "added" << std::endl;
 		}
 		std::cout << tempA[0] << std::endl;
 		ans.push_back(tempA);
