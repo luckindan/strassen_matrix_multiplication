@@ -29,6 +29,107 @@ vec matrix2x2(vec &data1, vec &data2) {
 	return ans;
 }
 
+vec add(vec &data1, vec &data2) {
+	vec ans;
+	vector<int> tempA;
+	for (int i = 0; i < data1.size(); i++) {
+		for (int j = 0; j < data1.size(); j++) {
+			tempA.push_back(data1[i][j] + data2[i][j]);
+		}
+		ans.push_back(tempA);
+	}
+	return ans;
+}
+
+vec subtract(vec &data1, vec &data2) {
+	vec ans;
+	vector<int> tempA;
+	for (int i = 0; i < data1.size(); i++) {
+		for (int j = 0; j < data1.size(); j++) {
+			tempA.push_back(data1[i][j] - data2[i][j]);
+		}
+		ans.push_back(tempA);
+	}
+	return ans;
+}
+
+vec submatrix(vec &data1, int index) {
+	vec ans;
+	vector<int> tempA;
+	int i = 0; //default if index = 1
+	int j = 0;
+	if (index == 2) {
+		i = data1.size() / 2;
+		j = 0;
+	}
+	else if (index == 3) {
+		i = 0;
+		j = data1.size() / 2;
+	}
+	else if (index == 4) {
+		i = data1.size() / 2;
+		j = data1.size() / 2;
+	}
+	for (i; i < (data1.size() / 2) + i; i++) {
+		for (j; j < (data1.size() / 2) + j; j++) {
+			tempA.push_back(data1[i][j]);
+		}
+		ans.push_back(tempA);
+	}
+	return ans;
+}
+
+vec recurse(vec &data1, vec &data2) {
+	if (data1.size() == 2) {
+		return matrix2x2(data1, data2);
+	}
+	vec ans;
+	vec a = submatrix(data1, 1);
+	vec b = submatrix(data1, 2);
+	vec c = submatrix(data1, 3);
+	vec d = submatrix(data1, 4);
+	vec e = submatrix(data2, 1);
+	vec f = submatrix(data2, 2);
+	vec g = submatrix(data2, 3);
+	vec h = submatrix(data2, 4);
+	vec temp1 = subtract(f, h);
+	vec p1 = recurse(a, temp1);
+	temp1 = add(a, b);
+	vec p2 = recurse(temp1, h);
+	temp1 = add(c, d);
+	vec p3 = recurse(temp1, e);
+	temp1 = subtract(g, e);
+	vec p4 = recurse(d, temp1);
+	temp1 = add(a, d);
+	vec temp2 = add(e, h);
+	vec p5 = recurse(temp1, temp2);
+	temp1 = subtract(b, d);
+	temp2 = subtract(f, h);
+	vec p6 = recurse(temp1, temp2);
+	temp1 = subtract(a, b);
+	temp2 = add(e, f);
+	vec p7 = recurse(temp1, temp2);
+
+	temp1 = add(p6, p5);
+	temp2 = add(temp1, p4);
+	vec index1 = subtract(temp2, p2);
+	vec index2 = add(p1, p2);
+	vec index3 = add(p3, p4);
+	temp1 = add(p1, p5);
+	temp2 = subtract(temp1, p3);
+	vec index4 = subtract(temp2, p7);
+
+	for (int i = 0; i < index1.size(); i++) {
+		ans.push_back(index1[i]);
+		ans.push_back(index2[i]);
+	}
+	for (int i = 0; i < index3.size(); i++) {
+		ans.push_back(index3[i]);
+		ans.push_back(index4[i]);
+	}
+	return ans;
+}
+
 vec strassen(vec &data1, vec &data2){
 	vec ans;
 
@@ -54,8 +155,8 @@ vec strassen(vec &data1, vec &data2){
 
 	return ans;
 }
-
-/*int recursive(vec &data1, vec &data2, vec &letter) {
+/*
+vec recursive(vec &data1, vec &data2, vec &letter) {
 	if (letter.size == 2) {
 		return matrix2x2(data1, data2);
 	}
@@ -87,4 +188,3 @@ vec strassen(vec &data1, vec &data2){
 	int p6 = (b - d) * (f - h);
 	int p7 = (a - c) * (e + f);
 }*/
-
