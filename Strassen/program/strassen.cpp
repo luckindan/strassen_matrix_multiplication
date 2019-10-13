@@ -55,24 +55,25 @@ vec subtract(vec &data1, vec &data2) {
 
 vec submatrix(vec &data1, int index) {
 	vec ans;
+	int size = data1.size() / 2;
 	vector<int> tempA;
 	int i = 0; //default if index = 1
 	int j = 0;
 	if (index == 2) {
-		i = data1.size() / 2;
+		i = size;
 		j = 0;
 	}
 	else if (index == 3) {
 		i = 0;
-		j = data1.size() / 2;
+		j = size;
 	}
 	else if (index == 4) {
-		i = data1.size() / 2;
-		j = data1.size() / 2;
+		i = size;
+		j = size;
 	}
-	for (i; i < (data1.size() / 2) + i; i++) {
-		for (j; j < (data1.size() / 2) + j; j++) {
-			tempA.push_back(data1[i][j]);
+	for (int k = i; i < size + i; k++) {
+		for (int l = j; j < size + j; l++) {
+			tempA.push_back(data1[k][l]);
 		}
 		ans.push_back(tempA);
 	}
