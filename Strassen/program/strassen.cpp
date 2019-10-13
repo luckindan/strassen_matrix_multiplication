@@ -141,7 +141,7 @@ vec strassen(vec &data1, vec &data2){
 	//if nxn matrix
 	std::cout << "strassen" << std::endl;
 	
-	recurse(data1, data2);
+	ans = recurse(data1, data2);
 
 	return ans;
 }
