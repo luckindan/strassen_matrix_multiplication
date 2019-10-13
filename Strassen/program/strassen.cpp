@@ -134,24 +134,14 @@ vec strassen(vec &data1, vec &data2){
 	vec ans;
 
 	//if 2x2 matrix
-	if (data1.size() == 2) {
+	/*if (data1.size() == 2) {
 		ans = matrix2x2(data1, data2);
-	}
+	}*/
 
 	//if nxn matrix
-	vec a;
-	vec b;
-	vec c;
-	vec d;
-	vec e;
-	vec f;
-	vec g;
-	vec h;
-	vec letter;
-
 	std::cout << "strassen" << std::endl;
 	
-	//recursive(data1, data2, letter);
+	recurse(data1, data2);
 
 	return ans;
 }
