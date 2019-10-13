@@ -76,6 +76,7 @@ vec submatrix(vec &data1, int index) {
 		for (int l = j; j < size + j; l++) {
 			tempA.push_back(data1[k][l]);
 		}
+		std::cout << tempA[0] << std::endl;
 		ans.push_back(tempA);
 	}
 	std::cout << ans[0][0] << std::endl;
