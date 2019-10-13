@@ -72,7 +72,7 @@ vec submatrix(vec &data1, int index) {
 		j = size;
 	}
 	int t = 0;
-	std::cout << data1[0][0] << std::endl;
+	std::cout << size + j << std::endl;
 	for (int k = i; i < size + i; k++) {
 		for (int l = j; j < size + j; l++) {
 			t = data1[k][l];
