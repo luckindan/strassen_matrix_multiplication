@@ -51,7 +51,6 @@ vec subtract(vec &data1, vec &data2) {
 	for (int i = 0; i < data1.size(); i++) {
 		for (int j = 0; j < data1.size(); j++) {
 			tempA.push_back(data1[i][j] - data2[i][j]);
-			std::cout << tempA[0] << std::endl;
 		}
 		ans.push_back(tempA);
 		tempA.clear();
@@ -87,6 +86,17 @@ vec submatrix(vec &data1, int index) {
 		tempA.clear();
 	}
 	return ans;
+}
+
+vector<int> combine(vec index1, vec index2, int i) {
+	vector<int> tempV;
+	for (int j = 0; j < index1.size(); j++) {
+		tempV.push_back(index1[i][j]);
+	}
+	for (int j = 0; j < index2.size(); j++) {
+		tempV.push_back(index2[i][j]);
+	}
+	return tempV;
 }
 
 //strassen's recursion
@@ -135,14 +145,16 @@ vec recurse(vec &data1, vec &data2) {
 	temp2 = subtract(temp1, p3);
 	vec index4 = subtract(temp2, p7);
 
-	for (int i = 0; i < index1.size(); i++) {
-		ans.push_back(index1[i]);
-		ans.push_back(index2[i]);
-	}
-	for (int i = 0; i < index3.size(); i++) {
-		ans.push_back(index3[i]);
-		ans.push_back(index4[i]);
-	}
+	//create final result
+	vector<int> tempV;
+	tempV = combine(index1, index2, 0);
+	ans.push_back(tempV);
+	tempV = combine(index1, index2, 1);
+	ans.push_back(tempV);
+	tempV = combine(index3, index4, 0);
+	ans.push_back(tempV);
+	tempV = combine(index3, index4, 1);
+	ans.push_back(tempV);
 	return ans;
 }
 
