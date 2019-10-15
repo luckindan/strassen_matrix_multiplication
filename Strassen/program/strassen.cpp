@@ -1,4 +1,5 @@
 #include "matrx.h"
+#include "log.cpp"
 //multiply a 2x2 matrix using strassen's method
 vec matrix2x2(vec &data1, vec &data2) {
 	vec ans;
@@ -16,7 +17,7 @@ vec matrix2x2(vec &data1, vec &data2) {
 	int p3 = (c + d) * e;
 	int p4 = d * (g - e);
 	int p5 = (a + d) * (e + h);
-	int p6 = (b - d) * (f - h);
+	int p6 = (b - d) * (g + h);
 	int p7 = (a - c) * (e + f);
 	vector<int> tempA;
 	vector<int> tempB;
@@ -129,9 +130,9 @@ vec recurse(vec &data1, vec &data2) {
 	vec temp2 = add(e, h);
 	vec p5 = recurse(temp1, temp2);
 	temp1 = subtract(b, d);
-	temp2 = subtract(f, h);
+	temp2 = add(g, h);
 	vec p6 = recurse(temp1, temp2);
-	temp1 = subtract(a, b);
+	temp1 = subtract(a, c);
 	temp2 = add(e, f);
 	vec p7 = recurse(temp1, temp2);
 
@@ -155,6 +156,7 @@ vec recurse(vec &data1, vec &data2) {
 	ans.push_back(tempV);
 	tempV = combine(index3, index4, 1);
 	ans.push_back(tempV);
+
 	return ans;
 }
 
