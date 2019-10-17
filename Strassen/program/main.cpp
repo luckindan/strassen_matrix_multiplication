@@ -35,15 +35,19 @@ int main(int argc, char *argv[]){
 		strass->run();
 		strass->dump();
 
-		int err = 0;
-		for(int i=0;i<strass->m_ans.size();i++){
-			for(int j=0;j<strass->m_ans[0].size();j++){
-				if(reg->m_ans[i][j] != strass->m_ans[i][j])
-					err++;
-			}
+		if(strass->m_ans.size() != reg->m_ans.size()){
+			cout << "Wrong answer, different size\n";
 		}
-		cout <<"There are " << err << " erros\n";
-
+		else{
+			int err = 0;
+			for(int i=0;i<strass->m_ans.size();i++){
+				for(int j=0;j<strass->m_ans[0].size();j++){
+					if(reg->m_ans[i][j] != strass->m_ans[i][j])
+						err++;
+				}
+			}
+			cout <<"There are " << err << " erros\n";
+		}
 		delete reg;
 		delete strass;
 		//report the results

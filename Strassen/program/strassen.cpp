@@ -2,7 +2,7 @@
 #include "log.cpp"
 //multiply a 2x2 matrix using strassen's method
 vec matrix2x2(vec &data1, vec &data2) {
-	vec ans;
+	vec ans(2, vector<int>(2, 0));
 
 	int a = data1[0][0];
 	int b = data1[0][1];
@@ -19,42 +19,38 @@ vec matrix2x2(vec &data1, vec &data2) {
 	int p5 = (a + d) * (e + h);
 	int p6 = (b - d) * (g + h);
 	int p7 = (a - c) * (e + f);
-	vector<int> tempA;
-	vector<int> tempB;
-	tempA.push_back(p5 + p4 - p2 + p6);
-	tempA.push_back(p1 + p2);
-	ans.push_back(tempA);
-	tempB.push_back(p3 + p4);
-	tempB.push_back(p1 + p5 - p7 - p3);
-	ans.push_back(tempB);
+
+	ans[0][0] = p5 + p4 -p2 +p6;
+
+	ans[0][1] = p1 + p2;
+
+	ans[1][0] = p3 + p4;
+
+	ans[1][1] = p1 + p5 - p7 - p3;
 
 	return ans;
 }
 
 //add two matrices
-vec add(vec &data1, vec &data2) {
-	vec ans;
-	vector<int> tempA;
+vec add(vec data1, vec data2) {
+	vec ans(data1.size(), vector<int>(data1.size(), 0));
+
 	for (int i = 0; i < data1.size(); i++) {
 		for (int j = 0; j < data1.size(); j++) {
-			tempA.push_back(data1[i][j] + data2[i][j]);
+			ans[i][j] = (data1[i][j] + data2[i][j]);
 		}
-		ans.push_back(tempA);
-		tempA.clear();
 	}
 	return ans;
 }
 
 //subtract two matrices
-vec subtract(vec &data1, vec &data2) {
-	vec ans;
-	vector<int> tempA;
+vec subtract(vec data1, vec data2) {
+	vec ans(data1.size(), vector<int>(data1.size(), 0));
+
 	for (int i = 0; i < data1.size(); i++) {
 		for (int j = 0; j < data1.size(); j++) {
-			tempA.push_back(data1[i][j] - data2[i][j]);
+			ans[i][j] = (data1[i][j] - data2[i][j]);
 		}
-		ans.push_back(tempA);
-		tempA.clear();
 	}
 	return ans;
 }
@@ -89,19 +85,27 @@ vec submatrix(vec &data1, int index) {
 	return ans;
 }
 
-vector<int> combine(vec index1, vec index2, int i) {
-	vector<int> tempV;
-	for (int j = 0; j < index1.size(); j++) {
-		tempV.push_back(index1[i][j]);
+vec combine(vec index1, vec index2, vec index3, vec index4) {
+
+	int size = index1.size();
+
+	vec tempV(size*2, vector<int>(size*2, 0));
+
+
+	for(int i=0; i<size;i++){
+		for(int j=0; j<size;j++){
+			tempV[i][j] = index1[i][j]; //add index 1
+			tempV[i][j+size] = index2[i][j]; //add index2
+			tempV[i+size][j] = index3[i][j]; // add index3
+			tempV[i+size][j+size] = index4[i][j]; //add index4
+		}
 	}
-	for (int j = 0; j < index2.size(); j++) {
-		tempV.push_back(index2[i][j]);
-	}
+
 	return tempV;
 }
 
 //strassen's recursion
-vec recurse(vec &data1, vec &data2) {
+vec recurse(vec data1, vec data2) {
 	if (data1.size() == 2) {
 		return matrix2x2(data1, data2);
 	}
@@ -118,61 +122,65 @@ vec recurse(vec &data1, vec &data2) {
 	vec h = submatrix(data2, 4);
 
 	//compute the 7 matrices needed
-	vec temp1 = subtract(f, h);
-	vec p1 = recurse(a, temp1);
-	temp1 = add(a, b);
-	vec p2 = recurse(temp1, h);
-	temp1 = add(c, d);
-	vec p3 = recurse(temp1, e);
-	temp1 = subtract(g, e);
-	vec p4 = recurse(d, temp1);
-	temp1 = add(a, d);
-	vec temp2 = add(e, h);
-	vec p5 = recurse(temp1, temp2);
-	temp1 = subtract(b, d);
-	temp2 = add(g, h);
-	vec p6 = recurse(temp1, temp2);
-	temp1 = subtract(a, c);
-	temp2 = add(e, f);
-	vec p7 = recurse(temp1, temp2);
+	vec p1 = recurse(a, subtract(f,h));
+	vec p2 = recurse(add(a,b), h);
+	vec p3 = recurse(add(c,d), e);
+	vec p4 = recurse(d, subtract(g,e));
+	vec p5 = recurse(add(a,d), add(e,h));
+	vec p6 = recurse(subtract(b,d), add(g,h));
+	vec p7 = recurse(subtract(a,c), add(e,f));
 
 	//create the matrices for the result
-	temp1 = add(p6, p5);
-	temp2 = add(temp1, p4);
-	vec index1 = subtract(temp2, p2);
+	vec index1 = subtract(add(add(p6,p5), p4), p2);
 	vec index2 = add(p1, p2);
 	vec index3 = add(p3, p4);
-	temp1 = add(p1, p5);
-	temp2 = subtract(temp1, p3);
-	vec index4 = subtract(temp2, p7);
+	vec index4 = subtract(subtract(add(p1, p5), p3), p7);
 
 	//create final result
-	vector<int> tempV;
-	tempV = combine(index1, index2, 0);
-	ans.push_back(tempV);
-	tempV = combine(index1, index2, 1);
-	ans.push_back(tempV);
-	tempV = combine(index3, index4, 0);
-	ans.push_back(tempV);
-	tempV = combine(index3, index4, 1);
-	ans.push_back(tempV);
+	ans = combine(index1, index2, index3, index4);
 
 	return ans;
 }
 
+
+void fill_matx(vec &data){
+
+	
+	int myRow = 2, myCol = 2, row = data.size(), col = data[0].size();
+
+
+	while(row > myRow){
+		myRow *= 2;
+	}
+	while(col > myCol){
+		myCol *= 2;
+	}
+	int q = myRow > myCol ? myRow : myCol;
+
+
+	for(int i =0;i<row;i++){
+		for(int j = 0;j< (q-col); j++)
+			data[i].push_back(0);
+	}
+
+	for(int i=0; i<q-row;i++){
+		data.push_back(vector<int> (q, 0));
+	}
+}
 //main
 vec strassen(vec &data1, vec &data2){
 	vec ans;
+	int row = data1.size();
+	int col = data2[0].size();
+	fill_matx(data1);
+	fill_matx(data2);
 
-	//if 2x2 matrix
-	/*if (data1.size() == 2) {
-		ans = matrix2x2(data1, data2);
-	}*/
-
-	//if nxn matrix
-	std::cout << "strassen" << std::endl;
 	
-	ans = recurse(data1, data2);
+	vec temp = recurse(data1, data2);
+
+	for(int i=0; i<row;i++){
+		ans.push_back(vector<int>(temp[i].begin(), temp[i].begin()+col));
+	}
 
 	return ans;
 }
