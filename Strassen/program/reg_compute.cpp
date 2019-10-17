@@ -1,15 +1,12 @@
 
 #include "matrx.h"
 #include <exception>
-vec reg_compute(vec &data1, vec &data2){
+vec reg_compute(vec &data1, vec &data2, vector<int>  &space_use){
 
 	vec ans;
 	int temp;
-	std::cout << "reg_compute" << std::endl;
+
 	try{
-		if (data1[0].size()!= data2.size()){
-			throw "Invalid matrices";
-		}
 		for (int i=0; i<data1.size();i++){
 			vector<int> tempV;
 			for(int j=0; j<data2[0].size();j++){

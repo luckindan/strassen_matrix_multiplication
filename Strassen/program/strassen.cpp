@@ -20,7 +20,7 @@ vec matrix2x2(vec &data1, vec &data2) {
 	int p6 = (b - d) * (g + h);
 	int p7 = (a - c) * (e + f);
 
-	ans[0][0] = p5 + p4 -p2 +p6;
+	ans[0][0] = p5 + p4 -p2 + p6;
 
 	ans[0][1] = p1 + p2;
 
@@ -34,7 +34,6 @@ vec matrix2x2(vec &data1, vec &data2) {
 //add two matrices
 vec add(vec data1, vec data2) {
 	vec ans(data1.size(), vector<int>(data1.size(), 0));
-
 	for (int i = 0; i < data1.size(); i++) {
 		for (int j = 0; j < data1.size(); j++) {
 			ans[i][j] = (data1[i][j] + data2[i][j]);
@@ -46,7 +45,6 @@ vec add(vec data1, vec data2) {
 //subtract two matrices
 vec subtract(vec data1, vec data2) {
 	vec ans(data1.size(), vector<int>(data1.size(), 0));
-
 	for (int i = 0; i < data1.size(); i++) {
 		for (int j = 0; j < data1.size(); j++) {
 			ans[i][j] = (data1[i][j] - data2[i][j]);
@@ -56,10 +54,10 @@ vec subtract(vec data1, vec data2) {
 }
 
 //create submatrix based on wanted index
-vec submatrix(vec &data1, int index) {
-	vec ans;
+vec submatrix(vec data1, int index) {
 	int size = data1.size() / 2;
-	vector<int> tempA;
+	vec ans(size, vector<int>(size, 0));
+
 	int i = 0; //default if index = 1
 	int j = 0;
 	if (index == 2) {
@@ -75,12 +73,10 @@ vec submatrix(vec &data1, int index) {
 		j = size;
 	}
 	int t = 0;
-	for (int k = i; k < size + i; k++) {
-		for (int l = j; l < size + j; l++) {
-			tempA.push_back(data1[k][l]);
+	for (int k = 0; k < size ; k++) {
+		for (int l = 0; l < size; l++) {
+			ans[k][l] = data1[k+i][l+j];
 		}
-		ans.push_back(tempA);
-		tempA.clear();
 	}
 	return ans;
 }
@@ -105,13 +101,16 @@ vec combine(vec index1, vec index2, vec index3, vec index4) {
 }
 
 //strassen's recursion
-vec recurse(vec data1, vec data2) {
+vec recurse(vec data1, vec data2, vector<int> &space) {
 	if (data1.size() == 2) {
 		return matrix2x2(data1, data2);
 	}
+
 	vec ans;
-	
+	int halfSize = data1.size()/2;
 	//create the submatrices needed
+
+	
 	vec a = submatrix(data1, 1);
 	vec b = submatrix(data1, 2);
 	vec c = submatrix(data1, 3);
@@ -122,13 +121,13 @@ vec recurse(vec data1, vec data2) {
 	vec h = submatrix(data2, 4);
 
 	//compute the 7 matrices needed
-	vec p1 = recurse(a, subtract(f,h));
-	vec p2 = recurse(add(a,b), h);
-	vec p3 = recurse(add(c,d), e);
-	vec p4 = recurse(d, subtract(g,e));
-	vec p5 = recurse(add(a,d), add(e,h));
-	vec p6 = recurse(subtract(b,d), add(g,h));
-	vec p7 = recurse(subtract(a,c), add(e,f));
+	vec p1 = recurse(a, subtract(f,h), space);
+	vec p2 = recurse(add(a,b), h, space);
+	vec p3 = recurse(add(c,d), e, space);
+	vec p4 = recurse(d, subtract(g,e), space);
+	vec p5 = recurse(add(a,d), add(e,h), space);
+	vec p6 = recurse(subtract(b,d), add(g,h), space);
+	vec p7 = recurse(subtract(a,c), add(e,f), space);
 
 	//create the matrices for the result
 	vec index1 = subtract(add(add(p6,p5), p4), p2);
@@ -168,7 +167,7 @@ void fill_matx(vec &data){
 	}
 }
 //main
-vec strassen(vec &data1, vec &data2){
+vec strassen(vec &data1, vec &data2, vector<int> &space){
 	vec ans;
 	int row = data1.size();
 	int col = data2[0].size();
@@ -176,7 +175,7 @@ vec strassen(vec &data1, vec &data2){
 	fill_matx(data2);
 
 	
-	vec temp = recurse(data1, data2);
+	vec temp = recurse(data1, data2, space);
 
 	for(int i=0; i<row;i++){
 		ans.push_back(vector<int>(temp[i].begin(), temp[i].begin()+col));

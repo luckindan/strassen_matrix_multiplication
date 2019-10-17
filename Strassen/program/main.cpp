@@ -11,46 +11,56 @@ int main(int argc, char *argv[]){
 		cout << "Wrong Arguments\n\t./out filename1 filename2\n";
 	}
 	else{
-		string filename1 = argv[1];
-		string filename2 = argv[2];
+		try{
+			string filename1 = argv[1];
+			string filename2 = argv[2];
+			
+			matrx *reg = new matrx(reg_compute, "Regular Computation");
 		
-		matrx *reg = new matrx(reg_compute, "Regular Computation");
-	
 
-		reg->retrieve_data(filename1, reg->m_data_1);
-		reg->retrieve_data(filename2, reg->m_data_2);
-		//pass the function to each matrix
+			reg->retrieve_data(filename1, reg->m_data_1);
+			reg->retrieve_data(filename2, reg->m_data_2);
 
-		reg->run();
-		reg->dump();
+			if(reg->m_data_1[0].size()!= reg->m_data_2.size())
+				throw "Invalid Matrices";
+			//pass the function to each matrix
 
-
-
-		matrx *strass = new matrx(strassen, "Strassen Theory");
+			reg->run();
+			reg->dump();
 
 
-	 	strass->retrieve_data(filename1, strass->m_data_1);
-		strass->retrieve_data(filename2, strass->m_data_2);
 
-		strass->run();
-		strass->dump();
+			matrx *strass = new matrx(strassen, "Strassen Theory");
 
-		if(strass->m_ans.size() != reg->m_ans.size()){
-			cout << "Wrong answer, different size\n";
-		}
-		else{
-			int err = 0;
-			for(int i=0;i<strass->m_ans.size();i++){
-				for(int j=0;j<strass->m_ans[0].size();j++){
-					if(reg->m_ans[i][j] != strass->m_ans[i][j])
-						err++;
-				}
+
+		 	strass->retrieve_data(filename1, strass->m_data_1);
+			strass->retrieve_data(filename2, strass->m_data_2);
+
+			strass->run();
+			strass->dump();
+
+			if(strass->m_ans.size() != reg->m_ans.size()){
+				cout << "Wrong answer, different size\n";
 			}
-			cout <<"There are " << err << " erros\n";
+			else{
+				int err = 0;
+				for(int i=0;i<strass->m_ans.size();i++){
+					for(int j=0;j<strass->m_ans[0].size();j++){
+						if(reg->m_ans[i][j] != strass->m_ans[i][j])
+							err++;
+					}
+				}
+				cout <<"There are " << err << " differences\n";
+			}
+			delete reg;
+			delete strass;
+		}//report the results
+		catch(char const *e){
+			cout << e << endl;
+			return 0;
 		}
-		delete reg;
-		delete strass;
-		//report the results
+		
+
 	}
 
 	return 0;
