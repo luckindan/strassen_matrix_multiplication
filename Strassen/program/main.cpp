@@ -5,6 +5,10 @@
 #include "reg_compute.cpp"
 using namespace std;
 
+
+
+
+
 int main(int argc, char *argv[]){
 
 	if(argc != 3){
@@ -27,6 +31,7 @@ int main(int argc, char *argv[]){
 
 			reg->run();
 			reg->dump();
+			
 
 
 
@@ -65,3 +70,4 @@ int main(int argc, char *argv[]){
 
 	return 0;
 }
+

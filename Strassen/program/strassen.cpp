@@ -101,16 +101,25 @@ vec combine(vec index1, vec index2, vec index3, vec index4) {
 }
 
 //strassen's recursion
-vec recurse(vec data1, vec data2, vector<int> &space) {
+vec recurse(vec data1, vec data2, pair<int,int> &space) {
+	
+	space.first++;
+	space.second = space.first > space.second ? space.first:space.second;
+	//cout << "Added 1 :"<<space.first << endl;
+
+
 	if (data1.size() == 2) {
+
+		space.first--;
+	//	cout << "Freed one: " <<  space.first << endl;
 		return matrix2x2(data1, data2);
 	}
+
+
 
 	vec ans;
 	int halfSize = data1.size()/2;
 	//create the submatrices needed
-
-	
 	vec a = submatrix(data1, 1);
 	vec b = submatrix(data1, 2);
 	vec c = submatrix(data1, 3);
@@ -138,6 +147,8 @@ vec recurse(vec data1, vec data2, vector<int> &space) {
 	//create final result
 	ans = combine(index1, index2, index3, index4);
 
+	space.first--;
+	//cout << "Freed one: " <<  space.first << endl;
 	return ans;
 }
 
@@ -167,7 +178,7 @@ void fill_matx(vec &data){
 	}
 }
 //main
-vec strassen(vec &data1, vec &data2, vector<int> &space){
+vec strassen(vec &data1, vec &data2, pair<int,int> &space){
 	vec ans;
 	int row = data1.size();
 	int col = data2[0].size();

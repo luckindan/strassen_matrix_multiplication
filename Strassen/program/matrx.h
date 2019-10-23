@@ -21,36 +21,36 @@ using namespace std;
 
 typedef vector<vector<int>> vec;
 
+
 class matrx{
     public:
         matrx(){
-            m_space = vector<int>(0);
+            m_space = pair<int,int>(0,0);
             run_time = chrono::duration<double>();
             m_name = "matrix";
         }
 
-        matrx(vec (*compute)(vec &data1, vec &data2, vector<int> &space)){
-        	m_space = vector<int>(0);
+        matrx(vec (*compute)(vec &data1, vec &data2, pair<int,int> &space)){
+        	m_space = pair<int,int>(0,0);
              run_time = chrono::duration<double>();
             m_name = "matrix";       
             m_compute = compute;
         }
-        matrx(vec (*compute)(vec &data1, vec &data2, vector<int> &space), string name){
-            m_space = vector<int>(0);
+        matrx(vec (*compute)(vec &data1, vec &data2, pair<int, int> &space), string name){
+            m_space = pair<int,int>(0,0);
             run_time = chrono::duration<double>();
             m_name = name;
             m_compute = compute;
         }
 
         ~matrx(){
-            m_space = vector<int>(0);
             run_time = chrono::duration<double>();
         }
         //matrx(function_pointer);
         void retrieve_data(string filename, vec& data); //reads the data into *m_data which is a 2D array 
         
         bool run(); //computes the
-        bool set_function(vec (*compute)(vec &data1, vec &data2, vector<int> &space)); //sets the computing methods 
+        bool set_function(vec (*compute)(vec &data1, vec &data2, pair<int,int> &space)); //sets the computing methods 
         chrono::duration<double> get_time(){return run_time;}  //returns the run time use
         void dump();
         void log(string message, vec data);
@@ -58,11 +58,12 @@ class matrx{
         vec m_data_1;
         vec m_data_2;
         vec m_ans;   
+        pair<int,int> m_space;
         
     private:
-        vector<int> m_space;
+      
         std::chrono::duration<double> run_time;
-        vec (*m_compute)(vec &data1, vec &data2, vector<int> &space);
+        vec (*m_compute)(vec &data1, vec &data2, pair<int,int> &space);
         string m_name;
         int m_row;
         int m_col;

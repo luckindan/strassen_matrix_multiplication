@@ -84,7 +84,7 @@ void matrx::dump(){
 	}
 
 	cout << "Time used " << run_time.count() << "s\n";
-	//cout << "Space used " << space_use << endl;
+	cout << "Stack space used at most: " << m_space.second << endl;
 }
 
 void matrx::log(string message, vec data){
