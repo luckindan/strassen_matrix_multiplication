@@ -59,10 +59,11 @@ class matrx{
         vec m_data_2;
         vec m_ans;   
         pair<int,int> m_space;
+        std::chrono::duration<double> run_time;
         
     private:
       
-        std::chrono::duration<double> run_time;
+ 
         vec (*m_compute)(vec &data1, vec &data2, pair<int,int> &space);
         string m_name;
         int m_row;

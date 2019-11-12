@@ -152,6 +152,7 @@ vec recurse(vec data1, vec data2, pair<int,int> &space) {
 	return ans;
 }
 
+
 void fill_matx(vec &data){
 
 	
@@ -176,7 +177,6 @@ void fill_matx(vec &data){
 		data.push_back(vector<int> (q, 0));
 	}
 }
-
 //main
 vec strassen(vec &data1, vec &data2, pair<int,int> &space){
 	vec ans;

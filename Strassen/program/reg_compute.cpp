@@ -1,6 +1,5 @@
 
 #include "matrx.h"
-//#include "reg_compute.h"
 #include <exception>
 vec reg_compute(vec &data1, vec &data2, pair<int,int>  &space_use){
 
