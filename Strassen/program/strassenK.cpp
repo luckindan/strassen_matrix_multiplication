@@ -1,6 +1,6 @@
 #include "matrx.h"
 #include <exception>
-#include "reg_compute.cpp"
+//#include "reg_compute.cpp"
 //multiply a 2x2 matrix using strassen's method
 vec matrix2x2K(vec &data1, vec &data2) {
 	vec ans(2, vector<int>(2, 0));
