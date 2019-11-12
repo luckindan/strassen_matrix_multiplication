@@ -1,4 +1,5 @@
 #include "matrx.h"
+#include <exception>
 //#include "reg_compute.cpp"
 vec reg_computeK(vec &data1, vec &data2, pair<int,int>  &space_use){
 
