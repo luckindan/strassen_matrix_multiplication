@@ -4,6 +4,9 @@
 #include "strassen.cpp"
 #include "reg_compute.cpp"
 #include "strassenK.cpp"
+#include "strassenK2.cpp"
+#include "strassenK3.cpp"
+#include "strassenK4.cpp"
 using namespace std;
 
 
@@ -46,13 +49,37 @@ int main(int argc, char *argv[]){
 			strass->dump();
 
 			//Log the result
-			matrx *strassK = new matrx(strassenK, "SAMK");
+			matrx *strassK = new matrx(strassenK, "SAMK = K");
 
 			strassK->retrieve_data(filename1, strassK->m_data_1);
 			strassK->retrieve_data(filename2, strassK->m_data_2);
 
 			strassK->run();
 			strassK->dump();
+
+			matrx *strassK2 = new matrx(strassenK2, "SAMK2 = K/2");
+
+			strassK2->retrieve_data(filename1, strassK2->m_data_1);
+			strassK2->retrieve_data(filename2, strassK2->m_data_2);
+
+			strassK2->run();
+			strassK2->dump();
+
+			matrx *strassK3 = new matrx(strassenK3, "SAMK = sqrt(k)");
+
+			strassK3->retrieve_data(filename1, strassK3->m_data_1);
+			strassK3->retrieve_data(filename2, strassK3->m_data_2);
+
+			strassK3->run();
+			strassK3->dump();
+
+			matrx *strassK4 = new matrx(strassenK, "SAMK = log2(k)");
+
+			strassK4->retrieve_data(filename1, strassK4->m_data_1);
+			strassK4->retrieve_data(filename2, strassK4->m_data_2);
+
+			strassK4->run();
+			strassK4->dump();
 /*
 			if(strass->m_ans.size() != reg->m_ans.size()){
 				cout << "Wrong answer, different size\n";
