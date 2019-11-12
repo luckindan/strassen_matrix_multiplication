@@ -2,6 +2,10 @@
 #include <iostream>
 #include "matrx.h"
 #include "strassen.cpp"
+#include "strassenK.cpp"
+#include "strassenK2.cpp"
+#include "strassenK3.cpp"
+#include "strassenK4.cpp"
 #include "reg_compute.cpp"
 using namespace std;
 
@@ -20,27 +24,23 @@ int main(int argc, char *argv[]){
 			string filename2 = argv[2];
 			
 			matrx *reg = new matrx(reg_compute, "Regular Computation");
-		
-
 			reg->retrieve_data(filename1, reg->m_data_1);
 			reg->retrieve_data(filename2, reg->m_data_2);
-
 			if(reg->m_data_1[0].size()!= reg->m_data_2.size())
 				throw "Invalid Matrices";
 			//pass the function to each matrix
-
 			reg->run();
 			reg->dump();
-			
-
-
 
 			matrx *strass = new matrx(strassen, "Strassen Theory");
-
-
 		 	strass->retrieve_data(filename1, strass->m_data_1);
 			strass->retrieve_data(filename2, strass->m_data_2);
+			strass->run();
+			strass->dump();
 
+			matrx *strass = new matrx(strassenK, "Strassen Theory");
+		 	strass->retrieve_data(filename1, strass->m_data_1);
+			strass->retrieve_data(filename2, strass->m_data_2);
 			strass->run();
 			strass->dump();
 
