@@ -215,4 +215,10 @@ vec strassenK(vec &data1, vec &data2, pair<int,int> &space) {
     int k = data1.size();
 
     vec temp = recurseK(data1, data2, space, k);
+
+    for(int i=0; i<row;i++){
+		ans.push_back(vector<int>(temp[i].begin(), temp[i].begin()+col));
+	}
+
+	return ans;
 }
