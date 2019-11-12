@@ -1,7 +1,7 @@
 #include "matrx.h"
 #include <exception>
 //#include "reg_compute.cpp"
-vec reg_compute(vec &data1, vec &data2, pair<int,int>  &space_use){
+vec reg_computeK(vec &data1, vec &data2, pair<int,int>  &space_use){
 
 	vec ans;
 	int temp;
@@ -139,7 +139,7 @@ vec recurseK(vec data1, vec data2, pair<int,int> &space, int k) {
 		space.first--;
 	//	cout << "Freed one: " <<  space.first << endl;
         pair<int,int> dummy;
-		return reg_compute(data1, data2, dummy);
+		return reg_computeK(data1, data2, dummy);
 	}
 
 
