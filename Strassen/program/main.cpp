@@ -30,7 +30,7 @@ int main(int argc, char *argv[]){
 			//pass the function to each matrix
 
 			reg->run();
-			reg->dump();
+			//reg->dump();
 			
 
 
@@ -42,9 +42,15 @@ int main(int argc, char *argv[]){
 			strass->retrieve_data(filename2, strass->m_data_2);
 
 			strass->run();
-			strass->dump();
+			//strass->dump();
 
-			if(strass->m_ans.size() != reg->m_ans.size()){
+			//Log the result
+			std::ofstream log_file;
+			log_file.open("../Log/memory_limit_report.txt", std::ios_base::app);
+			log_file << reg->run_time.count() << ',' << strass->run_time.count() << ',';
+			log_file.close();
+
+			/*if(strass->m_ans.size() != reg->m_ans.size()){
 				cout << "Wrong answer, different size\n";
 			}
 			else{
@@ -56,16 +62,14 @@ int main(int argc, char *argv[]){
 					}
 				}
 				cout <<"There are " << err << " differences\n";
-			}
+			}*/
 			delete reg;
 			delete strass;
 		}//report the results
 		catch(char const *e){
 			cout << e << endl;
-			return 0;
+			exit(EXIT_FAILURE);
 		}
-		
-
 	}
 
 	return 0;
