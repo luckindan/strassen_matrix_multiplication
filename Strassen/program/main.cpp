@@ -34,11 +34,11 @@ int main(int argc, char *argv[]){
 			strass->run();
 			strass->dump();
 
-			matrx *strass = new matrx(strassenK, "Strassen Theory");
-		 	strass->retrieve_data(filename1, strass->m_data_1);
-			strass->retrieve_data(filename2, strass->m_data_2);
-			strass->run();
-			strass->dump();
+			matrx *strassK = new matrx(strassenK, "Strassen Theory");
+		 	strassK->retrieve_data(filename1, strassK->m_data_1);
+			strassK->retrieve_data(filename2, strassK->m_data_2);
+			strassK->run();
+			strassK->dump();
 
 			if(strass->m_ans.size() != reg->m_ans.size()){
 				cout << "Wrong answer, different size\n";

@@ -1,7 +1,7 @@
 
 #include "matrx.h"
 #include <exception>
-vec reg_compute(vec &data1, vec &data2, pair<int,int>  &space_use){
+static vec reg_compute(vec &data1, vec &data2, pair<int,int>  &space_use){
 
 	vec ans;
 	int temp;
