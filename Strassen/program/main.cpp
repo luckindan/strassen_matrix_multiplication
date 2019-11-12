@@ -11,7 +11,12 @@ using namespace std;
 
 
 
-
+void log_time(matrx *mtx){
+	std::ofstream log_file;
+	log_file.open("../Log/memory_limit_report.txt", std::ios_base::app);
+	log_file << mtx->run_time.count() << ',';
+	log_file.close();
+}
 
 int main(int argc, char *argv[]){
 
@@ -25,7 +30,6 @@ int main(int argc, char *argv[]){
 			
 			matrx *reg = new matrx(reg_compute, "Regular Computation");
 		
-
 			reg->retrieve_data(filename1, reg->m_data_1);
 			reg->retrieve_data(filename2, reg->m_data_2);
 
@@ -34,9 +38,9 @@ int main(int argc, char *argv[]){
 			//pass the function to each matrix
 
 			reg->run();
-			reg->dump();
-			
-
+			//reg->dump();
+			log_time(reg);	
+			delete reg;
 
 
 			matrx *strass = new matrx(strassen, "Strassen Theory");
@@ -46,16 +50,20 @@ int main(int argc, char *argv[]){
 			strass->retrieve_data(filename2, strass->m_data_2);
 
 			strass->run();
-			strass->dump();
+			//strass->dump();
+			log_time(strass);
+			delete strass;
 
-			//Log the result
+	
 			matrx *strassK = new matrx(strassenK, "SAMK = K");
 
 			strassK->retrieve_data(filename1, strassK->m_data_1);
 			strassK->retrieve_data(filename2, strassK->m_data_2);
 
 			strassK->run();
-			strassK->dump();
+			//strassK->dump();
+			log_time(strassK);
+			delete strassK;
 
 			matrx *strassK2 = new matrx(strassenK2, "SAMK2 = K/2");
 
@@ -63,7 +71,9 @@ int main(int argc, char *argv[]){
 			strassK2->retrieve_data(filename2, strassK2->m_data_2);
 
 			strassK2->run();
-			strassK2->dump();
+			//strassK2->dump();
+			log_time(strassK2);
+			delete strassK2;
 
 			matrx *strassK3 = new matrx(strassenK3, "SAMK = sqrt(k)");
 
@@ -71,7 +81,9 @@ int main(int argc, char *argv[]){
 			strassK3->retrieve_data(filename2, strassK3->m_data_2);
 
 			strassK3->run();
-			strassK3->dump();
+			//strassK3->dump();
+			log_time(strassK3);
+			delete strassK3;
 
 			matrx *strassK4 = new matrx(strassenK, "SAMK = log2(k)");
 
@@ -79,24 +91,10 @@ int main(int argc, char *argv[]){
 			strassK4->retrieve_data(filename2, strassK4->m_data_2);
 
 			strassK4->run();
-			strassK4->dump();
-/*
-			if(strass->m_ans.size() != reg->m_ans.size()){
-				cout << "Wrong answer, different size\n";
-			}
-			else{
-				int err = 0;
-				for(int i=0;i<strass->m_ans.size();i++){
-					for(int j=0;j<strass->m_ans[0].size();j++){
-						if(reg->m_ans[i][j] != strass->m_ans[i][j])
-							err++;
-					}
-				}
-				cout <<"There are " << err << " differences\n";
-			}
-*/
-			delete reg;
-			delete strass;
+			//strassK4->dump();
+			log_time(strassK4);
+			delete strassK4;
+
 		}//report the results
 		catch(char const *e){
 			cout << e << endl;
@@ -107,9 +105,3 @@ int main(int argc, char *argv[]){
 	return 0;
 }
 
-void log_time(matrx *mtx){
-	std::ofstream log_file;
-	log_file.open("../Log/memory_limit_report.txt", std::ios_base::app);
-	log_file << mtx->run_time.count() << ',';
-	log_file.close();
-}
