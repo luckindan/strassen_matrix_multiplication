@@ -3,6 +3,7 @@
 #include "matrx.h"
 #include "strassen.cpp"
 #include "reg_compute.cpp"
+#include "strassenK.cpp"
 using namespace std;
 
 
@@ -30,7 +31,7 @@ int main(int argc, char *argv[]){
 			//pass the function to each matrix
 
 			reg->run();
-			//reg->dump();
+			reg->dump();
 			
 
 
@@ -42,15 +43,18 @@ int main(int argc, char *argv[]){
 			strass->retrieve_data(filename2, strass->m_data_2);
 
 			strass->run();
-			//strass->dump();
+			strass->dump();
 
 			//Log the result
-			std::ofstream log_file;
-			log_file.open("../Log/memory_limit_report.txt", std::ios_base::app);
-			log_file << reg->run_time.count() << ',' << strass->run_time.count() << ',';
-			log_file.close();
+			matrx *strassK = new matrx(strassenK, "SAMK");
 
-			/*if(strass->m_ans.size() != reg->m_ans.size()){
+			strassK->retrieve_data(filename1, strassK->m_data_1);
+			strassK->retrieve_data(filename2, strassK->m_data_2);
+
+			strassK->run();
+			strassK->dump();
+/*
+			if(strass->m_ans.size() != reg->m_ans.size()){
 				cout << "Wrong answer, different size\n";
 			}
 			else{
@@ -62,7 +66,8 @@ int main(int argc, char *argv[]){
 					}
 				}
 				cout <<"There are " << err << " differences\n";
-			}*/
+			}
+*/
 			delete reg;
 			delete strass;
 		}//report the results
@@ -75,3 +80,9 @@ int main(int argc, char *argv[]){
 	return 0;
 }
 
+void log_time(matrx *mtx){
+	std::ofstream log_file;
+	log_file.open("../Log/memory_limit_report.txt", std::ios_base::app);
+	log_file << mtx->run_time.count() << ',';
+	log_file.close();
+}

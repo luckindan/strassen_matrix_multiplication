@@ -44,7 +44,8 @@ void matrx::retrieve_data(std::string filename, vec& myvec){
 }
 
 void matrx::dump(){
-	cout << "Data 1:\n";
+
+	cout << m_name << ":\nData 1:\n";
 	if(m_data_1.size() > 20){
 		std::cout << "\tData is too big to display\n";
 	}
