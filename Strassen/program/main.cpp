@@ -3,15 +3,11 @@
 #include "matrx.h"
 #include "strassen.cpp"
 #include "strassenK.cpp"
-#include "strassenK2.cpp"
-#include "strassenK3.cpp"
-#include "strassenK4.cpp"
+//#include "strassenK2.cpp"
+//#include "strassenK3.cpp"
+//#include "strassenK4.cpp"
 #include "reg_compute.cpp"
 using namespace std;
-
-
-
-
 
 int main(int argc, char *argv[]){
 

@@ -1,7 +1,7 @@
 #include "matrx.h"
 #include "reg_compute.cpp"
 //multiply a 2x2 matrix using strassen's method
-vec matrix2x2(vec &data1, vec &data2) {
+vec matrix2x2K(vec &data1, vec &data2) {
 	vec ans(2, vector<int>(2, 0));
 
 	int a = data1[0][0];
@@ -32,7 +32,7 @@ vec matrix2x2(vec &data1, vec &data2) {
 }
 
 //add two matrices
-vec add(vec data1, vec data2) {
+vec addK(vec data1, vec data2) {
 	vec ans(data1.size(), vector<int>(data1.size(), 0));
 	for (int i = 0; i < data1.size(); i++) {
 		for (int j = 0; j < data1.size(); j++) {
@@ -43,7 +43,7 @@ vec add(vec data1, vec data2) {
 }
 
 //subtract two matrices
-vec subtract(vec data1, vec data2) {
+vec subtractK(vec data1, vec data2) {
 	vec ans(data1.size(), vector<int>(data1.size(), 0));
 	for (int i = 0; i < data1.size(); i++) {
 		for (int j = 0; j < data1.size(); j++) {
@@ -54,7 +54,7 @@ vec subtract(vec data1, vec data2) {
 }
 
 //create submatrix based on wanted index
-vec submatrix(vec data1, int index) {
+vec submatrixK(vec data1, int index) {
 	int size = data1.size() / 2;
 	vec ans(size, vector<int>(size, 0));
 
@@ -81,7 +81,7 @@ vec submatrix(vec data1, int index) {
 	return ans;
 }
 
-vec combine(vec index1, vec index2, vec index3, vec index4) {
+vec combineK(vec index1, vec index2, vec index3, vec index4) {
 
 	int size = index1.size();
 
@@ -101,7 +101,7 @@ vec combine(vec index1, vec index2, vec index3, vec index4) {
 }
 
 //strassen's recursion
-vec recurse(vec data1, vec data2, pair<int,int> &space, int k) {
+vec recurseK(vec data1, vec data2, pair<int,int> &space, int k) {
 	
 	space.first++;
 	space.second = space.first > space.second ? space.first:space.second;
@@ -120,39 +120,39 @@ vec recurse(vec data1, vec data2, pair<int,int> &space, int k) {
 	vec ans;
 	int halfSize = data1.size()/2;
 	//create the submatrices needed
-	vec a = submatrix(data1, 1);
-	vec b = submatrix(data1, 2);
-	vec c = submatrix(data1, 3);
-	vec d = submatrix(data1, 4);
-	vec e = submatrix(data2, 1);
-	vec f = submatrix(data2, 2);
-	vec g = submatrix(data2, 3);
-	vec h = submatrix(data2, 4);
+	vec a = submatrixK(data1, 1);
+	vec b = submatrixK(data1, 2);
+	vec c = submatrixK(data1, 3);
+	vec d = submatrixK(data1, 4);
+	vec e = submatrixK(data2, 1);
+	vec f = submatrixK(data2, 2);
+	vec g = submatrixK(data2, 3);
+	vec h = submatrixK(data2, 4);
 
 	//compute the 7 matrices needed
-	vec p1 = recurse(a, subtract(f,h), space, k);
-	vec p2 = recurse(add(a,b), h, space, k);
-	vec p3 = recurse(add(c,d), e, space, k);
-	vec p4 = recurse(d, subtract(g,e), space, k);
-	vec p5 = recurse(add(a,d), add(e,h), space, k);
-	vec p6 = recurse(subtract(b,d), add(g,h), space, k);
-	vec p7 = recurse(subtract(a,c), add(e,f), space, k);
+	vec p1 = recurseK(a, subtractK(f,h), space, k);
+	vec p2 = recurseK(addK(a,b), h, space, k);
+	vec p3 = recurseK(addK(c,d), e, space, k);
+	vec p4 = recurseK(d, subtractK(g,e), space, k);
+	vec p5 = recurseK(addK(a,d), addK(e,h), space, k);
+	vec p6 = recurseK(subtractK(b,d), addK(g,h), space, k);
+	vec p7 = recurseK(subtractK(a,c), addK(e,f), space, k);
 
 	//create the matrices for the result
-	vec index1 = subtract(add(add(p6,p5), p4), p2);
-	vec index2 = add(p1, p2);
-	vec index3 = add(p3, p4);
-	vec index4 = subtract(subtract(add(p1, p5), p3), p7);
+	vec index1 = subtractK(addK(addK(p6,p5), p4), p2);
+	vec index2 = addK(p1, p2);
+	vec index3 = addK(p3, p4);
+	vec index4 = subtractK(subtractK(addK(p1, p5), p3), p7);
 
 	//create final result
-	ans = combine(index1, index2, index3, index4);
+	ans = combineK(index1, index2, index3, index4);
 
 	space.first--;
 	//cout << "Freed one: " <<  space.first << endl;
 	return ans;
 }
 
-void fill_matx(vec &data){
+void fill_matxK(vec &data){
 
 	
 	int myRow = 2, myCol = 2, row = data.size(), col = data[0].size();
@@ -182,10 +182,10 @@ vec strassenK(vec &data1, vec &data2, pair<int,int> &space) {
     vec ans;
 	int row = data1.size();
 	int col = data2[0].size();
-	fill_matx(data1);
-	fill_matx(data2);
+	fill_matxK(data1);
+	fill_matxK(data2);
 
     int k = data1.size();
 
-    vec temp = recurse(data1, data2, space, k);
+    vec temp = recurseK(data1, data2, space, k);
 }
