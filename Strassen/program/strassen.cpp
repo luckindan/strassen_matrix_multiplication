@@ -1,36 +1,6 @@
 #include "matrx.h"
 #include "log.cpp"
-//multiply a 2x2 matrix using strassen's method
-vec matrix2x2(vec &data1, vec &data2) {
-	vec ans(2, vector<int>(2, 0));
-
-	int a = data1[0][0];
-	int b = data1[0][1];
-	int c = data1[1][0];
-	int d = data1[1][1];
-	int e = data2[0][0];
-	int f = data2[0][1];
-	int g = data2[1][0];
-	int h = data2[1][1];
-	int p1 = a * (f - h);
-	int p2 = (a + b) * h;
-	int p3 = (c + d) * e;
-	int p4 = d * (g - e);
-	int p5 = (a + d) * (e + h);
-	int p6 = (b - d) * (g + h);
-	int p7 = (a - c) * (e + f);
-
-	ans[0][0] = p5 + p4 -p2 + p6;
-
-	ans[0][1] = p1 + p2;
-
-	ans[1][0] = p3 + p4;
-
-	ans[1][1] = p1 + p5 - p7 - p3;
-
-	return ans;
-}
-
+#include "reg_compute.cpp"
 //add two matrices
 vec add(vec data1, vec data2) {
 	vec ans(data1.size(), vector<int>(data1.size(), 0));
@@ -101,18 +71,16 @@ vec combine(vec index1, vec index2, vec index3, vec index4) {
 }
 
 //strassen's recursion
-vec recurse(vec data1, vec data2, pair<int,int> &space) {
+vec recurse(vec data1, vec data2,  int k) {
 	
-	space.first++;
-	space.second = space.first > space.second ? space.first:space.second;
-	//cout << "Added 1 :"<<space.first << endl;
+	//cout << "Added 1 :".first << endl;
 
 
-	if (data1.size() == 2) {
+	if (data1.size() <= k) {
 
-		space.first--;
-	//	cout << "Freed one: " <<  space.first << endl;
-		return matrix2x2(data1, data2);
+
+	//	cout << "Freed one: " <<.first << endl;
+		return reg_compute(data1, data2,  k);
 	}
 
 
@@ -130,13 +98,13 @@ vec recurse(vec data1, vec data2, pair<int,int> &space) {
 	vec h = submatrix(data2, 4);
 
 	//compute the 7 matrices needed
-	vec p1 = recurse(a, subtract(f,h), space);
-	vec p2 = recurse(add(a,b), h, space);
-	vec p3 = recurse(add(c,d), e, space);
-	vec p4 = recurse(d, subtract(g,e), space);
-	vec p5 = recurse(add(a,d), add(e,h), space);
-	vec p6 = recurse(subtract(b,d), add(g,h), space);
-	vec p7 = recurse(subtract(a,c), add(e,f), space);
+	vec p1 = recurse(a, subtract(f,h), k);
+	vec p2 = recurse(add(a,b), h, k);
+	vec p3 = recurse(add(c,d), e, k);
+	vec p4 = recurse(d, subtract(g,e), k);
+	vec p5 = recurse(add(a,d), add(e,h), k);
+	vec p6 = recurse(subtract(b,d), add(g,h), k);
+	vec p7 = recurse(subtract(a,c), add(e,f), k);
 
 	//create the matrices for the result
 	vec index1 = subtract(add(add(p6,p5), p4), p2);
@@ -147,8 +115,7 @@ vec recurse(vec data1, vec data2, pair<int,int> &space) {
 	//create final result
 	ans = combine(index1, index2, index3, index4);
 
-	space.first--;
-	//cout << "Freed one: " <<  space.first << endl;
+	//cout << "Freed one: " <<.first << endl;
 	return ans;
 }
 
@@ -178,7 +145,7 @@ void fill_matx(vec &data){
 	}
 }
 //main
-vec strassen(vec &data1, vec &data2, pair<int,int> &space){
+vec strassen(vec &data1, vec &data2,  int k){
 	vec ans;
 	int row = data1.size();
 	int col = data2[0].size();
@@ -186,11 +153,7 @@ vec strassen(vec &data1, vec &data2, pair<int,int> &space){
 	fill_matx(data2);
 
 	
-	vec temp = recurse(data1, data2, space);
-
-	for(int i=0; i<row;i++){
-		ans.push_back(vector<int>(temp[i].begin(), temp[i].begin()+col));
-	}
+	ans = recurse(data1, data2, k);
 
 	return ans;
 }

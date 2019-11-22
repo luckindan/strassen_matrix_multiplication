@@ -9,23 +9,30 @@ def main():
 
 	animation = "|/-\\"
 	idx = 0
-	
-	os.system("rm ../Log/memory_limit_report.txt")
+	try:
+		os.system("rm ../Log/memory_limit_report.csv")
+	except:
+		pass 
 
-	while signal:
-		
-		signal = executeCode(data_size)
+	with open("../Log/memory_limit_report.csv", 'a') as f:
+			f.write("BAM,SAM,k=4,k=8,k=16,k=32,k=64,k=128,k=256,k=512,k=1024,k=2048,k=half,k=log,k=sqrt,data_size" + '\n')
+	limit = 2
+	counter = 0
+	while signal and counter <= limit:
+		for i in range(10):
+			signal = executeCode(data_size)
 
 		data_size *=2
+		counter+=1
 		print(str(data_size) + animation[idx % len(animation)], end="\r")
 		idx = (idx+1)%len(animation)
 
-	breakingPoint = binary_search_datasize(data_size/2, data_size)
-	print("breakingPoint is")
-	print(breakingPoint)
+	#breakingPoint = binary_search_datasize(data_size/2, data_size)
+	#print("breakingPoint is")
+	#print(breakingPoint)
 
 def log(data_size):
-	with open("../Log/memory_limit_report.txt", 'a') as f:
+	with open("../Log/memory_limit_report.csv", 'a') as f:
 			f.write(str(data_size) + '\n')	
 
 def binary_search_datasize(data_size_s, data_size_l):
@@ -45,9 +52,6 @@ def binary_search_datasize(data_size_s, data_size_l):
 		return binary_search_datasize(midpoint+1, data_size_l)
 	else:
 		return binary_search_datasize(data_size_s, midpoint-1)
-
-
-
 
 
 def executeCode(data_size):

@@ -3,7 +3,7 @@
 
 
 
-bool matrx::run(){
+bool matrx::run(int k){
 	
 	try
 	{
@@ -11,7 +11,7 @@ bool matrx::run(){
 			throw "No data loaded, please load the data first";
 
 		auto start = std::chrono::system_clock::now();
-		m_ans = m_compute(m_data_1, m_data_2, m_space);
+		m_ans = m_compute(m_data_1, m_data_2, k);
 		auto end = std::chrono::system_clock::now();
 		run_time = end -start;
 
@@ -41,6 +41,8 @@ void matrx::retrieve_data(std::string filename, vec& myvec){
 		myvec.push_back(v);
 		row+=1;
 	}
+	m_col = col;
+	m_row = row;
 }
 
 void matrx::dump(){
@@ -85,7 +87,7 @@ void matrx::dump(){
 	}
 
 	cout << "Time used " << run_time.count() << "s\n";
-	cout << "Stack space used at most: " << m_space.second << endl;
+	
 }
 
 void matrx::log(string message, vec data){
