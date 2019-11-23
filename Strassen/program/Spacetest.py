@@ -57,7 +57,8 @@ def binary_search_datasize(data_size_s, data_size_l):
 def executeCode(data_size):
 	
 	command_create_file = "python3 ../data/create_data.py"
-	command_run = "valgrind --tool=massif ./out"
+	command_run1 = "valgrind --tool=massif ./reg"
+	command_run2 = "valgrind --tool=massif ./strass"
 	data_file_name1 =  "../data/"+str(data_size) + "_1.txt"
 	data_file_name2 =  "../data/"+str(data_size) + "_2.txt"
 	try:
@@ -65,11 +66,13 @@ def executeCode(data_size):
 
 		command_2 = " ".join([command_create_file,str(data_size),str(data_size), str(65535), data_file_name2])
 		
-		command_3 = " ".join([command_run, data_file_name1, data_file_name2])
+		command_3 = " ".join([command_run1, data_file_name1, data_file_name2])
 
+		command_4 = " ".join([command_run2, data_file_name1, data_file_name2])		
 		os.system(command_1)
 		os.system(command_2)
 		os.system(command_3)
+		os.system(command_4)
 		os.system("rm " + data_file_name1)
 		os.system("rm " + data_file_name2)
 		log(data_size)
