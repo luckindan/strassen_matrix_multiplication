@@ -16,7 +16,7 @@ def main():
 
 	with open("../Log/memory_limit_report.csv", 'a') as f:
 			f.write("BAM,SAM,k=4,k=8,k=16,k=32,k=64,k=128,k=256,k=512,k=1024,k=2048,k=half,k=log,k=sqrt,data_size" + '\n')
-	limit = 2
+	limit = 11
 	counter = 0
 	while signal and counter <= limit:
 		for i in range(10):
@@ -57,7 +57,7 @@ def binary_search_datasize(data_size_s, data_size_l):
 def executeCode(data_size):
 	
 	command_create_file = "python3 ../data/create_data.py"
-	command_run = "./out"
+	command_run = "valgrind --tool=massif ./out"
 	data_file_name1 =  "../data/"+str(data_size) + "_1.txt"
 	data_file_name2 =  "../data/"+str(data_size) + "_2.txt"
 	try:

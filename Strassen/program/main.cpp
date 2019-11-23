@@ -1,7 +1,7 @@
 
 #include <iostream>
 #include "matrx.h"
-#include "strassen.cpp"
+//#include "strassen.cpp"
 //#include "reg_compute.cpp"
 
 
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
 			string filename1 = argv[1];
 			string filename2 = argv[2];
 
-			matrx *reg = new matrx(reg_compute, "Regular Computation");
+			matrx *reg = new matrx(reg->reg_compute, "Regular Computation");
 		
 			reg->retrieve_data(filename1, reg->m_data_1);
 			reg->retrieve_data(filename2, reg->m_data_2);
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]){
 
 			int k;
 			for(int i = 1; i<=11;i++){
-				matrx *strassK = new matrx(strassen, "SAMK");
+				matrx *strassK = new matrx(strassK->strassen, "SAMK");
 
 				strassK->retrieve_data(filename1, strassK->m_data_1);
 				strassK->retrieve_data(filename2, strassK->m_data_2);
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]){
 				delete strassK;
 			}
 
-			matrx *strassK_half = new matrx(strassen, "SAMK_half");
+			matrx *strassK_half = new matrx(strassK_half->strassen, "SAMK_half");
 
 			strassK_half->retrieve_data(filename1, strassK_half->m_data_1);
 			strassK_half->retrieve_data(filename2, strassK_half->m_data_2);
@@ -67,7 +67,7 @@ int main(int argc, char *argv[]){
 			delete strassK_half;
 			
 
-			matrx *strassK_log = new matrx(strassen, "SAMK_log");
+			matrx *strassK_log = new matrx(strassK_log->strassen, "SAMK_log");
 
 			strassK_log->retrieve_data(filename1, strassK_log->m_data_1);
 			strassK_log->retrieve_data(filename2, strassK_log->m_data_2);
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]){
 			log_time(strassK_log);
 			delete strassK_log;
 
-			matrx *strassK_sqrt = new matrx(strassen, "SAMK_sqrt");
+			matrx *strassK_sqrt = new matrx(strassK_sqrt->strassen, "SAMK_sqrt");
 
 			strassK_sqrt->retrieve_data(filename1, strassK_sqrt->m_data_1);
 			strassK_sqrt->retrieve_data(filename2, strassK_sqrt->m_data_2);
@@ -88,6 +88,7 @@ int main(int argc, char *argv[]){
 			//strassK_sqrt->dump();
 			log_time(strassK_sqrt);
 			delete strassK_sqrt;
+			
 
 		}//report the results
 		catch(char const *e){
